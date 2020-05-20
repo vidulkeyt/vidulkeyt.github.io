@@ -1,0 +1,84 @@
+<html>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script>
+    function show(it) {
+      $(it).css({
+         'animation-name': 'appear',
+      })
+    }
+    function getNumb(n) {
+      return Math.ceil(Math.random()*n)
+    }
+    function init() {
+      x= getNumb(10)
+      y= getNumb(10)
+      oppNumb = getNumb(4)
+      switch(oppNumb) {
+        case 0: 
+          z=x*y;
+          opp='*';
+          break;
+        case 1: 
+          t=x+y;
+          z=x;
+          x=t;
+          opp='-';
+          break;
+        case 2: 
+          t=x*y;
+          z=x;
+          x=t;
+          opp='/';
+          break;
+        default:
+          z=x+y;
+          opp='+';
+          break;
+      }
+
+      $("#task").text ('' + x + ' ' + opp + ' ' + y);
+      $('#wright').text(z);
+      $('.msg').css('animation-name', '');
+    }
+
+    function check(e) {
+      wright=$('#wright').text().trim()
+      answer=$('#answer').val().trim()
+      if (answer==wright) {
+        show('.wright')
+      } else {
+        show('.wrong')
+      }
+      setTimeout(init, 1000)
+      return false
+    }
+  </script>
+  <style>
+    @keyframes appear {
+        0% {top: -20px; opacity:1}
+        15% {top: 20px; opacity:1}
+        100% {opacity:0}
+    }
+    .msg {
+      opacity: 0;
+      position: absolute;
+      top: -20px;
+      animation-duration: 2s;
+      
+    }
+  </style>
+  <body onload="init()">
+    <form onsubmit="return check()" class="container">
+      <div class="alert alert-success wright msg">Правильно! Молодец!</div>
+      <div class="alert alert-danger wrong msg">Неправильно, ох-ох-ох :(</div>
+      <div id="task" class="form-group">23*234</div>
+      <div class="form-group">
+        <label for="answer">Ответ</label>
+        <input id="answer" type="text"></input>
+        <input id="wright" type="hidden"></input>
+      </div>
+      <div class="form-group"><button type="submit" class="btn btn-primary">Проверить</button></div>
+    </form>
+  </body>
+</html>
