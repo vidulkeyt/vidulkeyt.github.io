@@ -39,10 +39,15 @@
 
       $("#task").text ('' + x + ' ' + opp + ' ' + y);
       $('#wright').text(z);
+      $('#answer').val('').focus();
+
+    }
+    function stopAnimation() {
       $('.msg').css('animation-name', '');
     }
 
     function check(e) {
+      stopAnimation();
       wright=$('#wright').text().trim()
       answer=$('#answer').val().trim()
       if (answer==wright) {
@@ -50,7 +55,8 @@
       } else {
         show('.wrong')
       }
-      setTimeout(init, 1000)
+      setTimeout(init, 500)
+      setTimeout(stopAnimation, 2000)
       return false
     }
   </script>
@@ -58,7 +64,8 @@
     @keyframes appear {
         0% {top: -20px; opacity:1}
         15% {top: 20px; opacity:1}
-        100% {opacity:0}
+        85% {top: 20px; opacity:0.3}
+        100% {top: -20px; opacity:0}
     }
     .msg {
       opacity: 0;
@@ -70,12 +77,13 @@
   </style>
   <body onload="init()">
     <form onsubmit="return check()" class="container">
+      <h3>Катя, реши пример!</h3>
       <div class="alert alert-success wright msg">Правильно! Молодец!</div>
       <div class="alert alert-danger wrong msg">Неправильно, ох-ох-ох :(</div>
       <div id="task" class="form-group">23*234</div>
       <div class="form-group">
         <label for="answer">Ответ</label>
-        <input id="answer" type="text"></input>
+        <input id="answer" type="text" ></input>
         <input id="wright" type="hidden"></input>
       </div>
       <div class="form-group"><button type="submit" class="btn btn-primary">Проверить</button></div>
